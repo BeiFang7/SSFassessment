@@ -13,10 +13,12 @@ public class OrderRedis {
   @Autowired
   RedisTemplate<String, Object> redisTemplate;
 
+  //save method
   public void save(final Order order){
     redisTemplate.opsForValue().set(order.getOrderId(),order.toJSON().toString());
   }
 
+  //find id method in redis
   public Order findById(final String orderId){
     Order result = (Order) redisTemplate.opsForHash().get(ORDER_ENTITY+"_Map",orderId);
     return result;

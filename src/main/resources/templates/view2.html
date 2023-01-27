@@ -10,11 +10,15 @@
   <div border="1">
     <h1>Delivery Details</h1>
     <p>Order Number: <a data-th-href="@{'/pizza/order/' + *{orderId}}" data-th-text="*{orderId}"></a></p>
+    <br>
     <p>Your order will be delivered to </p>
     <p data-th-text="*{address}"></p>
+    <br>
     <p>Pizza cost: </p>
     <p data-th-text="*{pizzaCost}"></p>
+    <br>
     <p data-th-if="*{rush}">Rush: $2</p>
+    <br>
     <p>Total cost: </p>
     <p data-th-text="*{total}"></p>
   </div>

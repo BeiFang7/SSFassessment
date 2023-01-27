@@ -17,6 +17,7 @@ import jakarta.validation.constraints.Size;
 
 public class Order implements Serializable{
 
+  //validate attributes
   private String orderId;
   
   @NotNull(message = "Name is mandatory")
@@ -45,6 +46,7 @@ public class Order implements Serializable{
   private double total;
   private double pizzaCost;
 
+  //getters & setters
   public String getOrderId() {
     return orderId;
   }
@@ -110,9 +112,9 @@ public class Order implements Serializable{
   }
   public void setPizzaCost(double pizzaCost) {
     this.pizzaCost = pizzaCost;
-  }
-  
+  } 
 
+  //constructors
   public Order(){
     this.orderId = generateId(8);
   }
@@ -141,6 +143,7 @@ public class Order implements Serializable{
     } else this.total = total;
   }
 
+  //generate random 8 digit ids using UUID jdk class
   public String generateId(int numChars){
     UUID id = UUID.randomUUID();
     String idString = id.toString().substring(0,numChars);
@@ -148,6 +151,7 @@ public class Order implements Serializable{
     
   }
 
+  //calculate pizza cost by multiplying quantity of pizza with multiplier (size) and type of pizza selected
   public double calculatePizzaCost(String pizza, String size, Integer quantity){
 
     double costOfPizza = 0;
@@ -180,6 +184,7 @@ public class Order implements Serializable{
   }
 
 
+  //create json object and set the order object attributes
   public static Order createJson(String json) throws IOException{
       Order o = new Order();
       try(InputStream is = new ByteArrayInputStream(json.getBytes())){
@@ -214,6 +219,7 @@ public class Order implements Serializable{
 
     }
 
+    //create method toJson
     public JsonObject toJSON(){
       return Json.createObjectBuilder()
         .add("orderId", this.getOrderId())

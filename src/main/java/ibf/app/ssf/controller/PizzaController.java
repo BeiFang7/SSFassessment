@@ -3,7 +3,6 @@ package ibf.app.ssf.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +21,7 @@ public class PizzaController {
   @Autowired
   private OrderRedis orderRedisSvc; 
 
-
+  //set index.html as landing page
   @GetMapping(path="/")
   public String orderForm(Model model){
     System.out.println("======= inside GetMapping / =======");
@@ -30,13 +29,14 @@ public class PizzaController {
     return "index";
   }
 
+  //validate the user inputs, if got error return to index.html page, else go to view1.html
   @PostMapping(path = "/pizza", consumes = "application/x-www-form-urlencoded", produces="text/html")
   public String saveOrder (@Valid Order order, BindingResult binding, Model model, HttpServletResponse response){
     System.out.println("======= inside PostMapping /pizza =======");
     System.out.println(binding.hasErrors());
     System.out.println("======= order: "+order);
     if (binding.hasErrors()){
-      return "index";
+      return "view1";
     }
     
     orderRedisSvc.save(order);
@@ -54,6 +54,7 @@ public class PizzaController {
     return "view1";
   }
 
+  //check if user inputs are valid, go to view2.html
   @PostMapping(path="/pizza/order", consumes = "application/x-www-form-urlencoded", produces="text/html")
   public String createOrder (@Valid Order order, BindingResult binding, Model model, HttpServletResponse response){
     System.out.println("======= inside postmapping /pizza/order =======");
@@ -69,14 +70,14 @@ public class PizzaController {
     return "view2";
   }
 
-  // @GetMapping(path="/pizza/order/{orderId}")
-  // public String getOrderInfoById(Model model, @PathVariable(value="orderId") String orderId){
-  //   Order o = orderRedisSvc.findById(orderId);
-  //   o.setOrderId(orderId);
-  //   model.addAttribute("order", o);
-  //   return "view2";
+  @GetMapping(path="/pizza/order/{orderId}")
+  public String getOrderInfoById(Model model, @PathVariable(value="orderId") String orderId){
+    Order o = orderRedisSvc.findById(orderId);
+    o.setOrderId(orderId);
+    model.addAttribute("order", o);
+    return "view2";
     
-  // }
+  }
 
 
 }
