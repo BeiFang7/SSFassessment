@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .error{
+      color:red;
+    }
+  </style>
+  <title>Order Delivery Details</title>
+</head>
+<body>
+  <div border=1>
+    <h1>Order Delivery Details</h1>
+    <form
+      action="#"
+      data-th-action="@{/pizza/order}"
+      data-th-object="${order}"
+      method="post"
+    >
+      <p>
+        Name: 
+        <input type="text" data-th-field="*{name}" />
+        <br/>
+        <span
+          class="error"
+          data-th-if="${#fields.hasErrors('name')}"
+          data-th-errors="*{name}"
+        ></span>
+      </p>
+      <br />
+      <p>
+        Address:
+        <input type="text" data-th-field="*{address}" />
+        <br/>
+        <span
+          class="error"
+          data-th-if="${#fields.hasErrors('address')}"
+          data-th-errors="*{address}"
+        ></span>
+      </p>
+      <br />
+      <p>
+        Phone:
+        <input type="text" data-th-field="*{phone}" />
+        <br/>
+        <span
+          class="error"
+          data-th-if="${#fields.hasErrors('phone')}"
+          data-th-errors="*{phone}"
+        ></span>
+      </p>
+      <br />
+      <p>
+        Rush:
+        <input type="checkbox" data-th-field="*{rush}" />
+        <br/>
+        <span
+          class="error"
+          data-th-if="${#fields.hasErrors('rush')}"
+          data-th-errors="*{rush}"
+        ></span>
+      </p>
+      <br />
+      <p>
+        Comments:
+        <input type="text" data-th-field="*{comments}" />
+        <br/>
+        <span
+          class="error"
+          data-th-if="${#fields.hasErrors('comments')}"
+          data-th-errors="*{comments}"
+        ></span>
+      </p>
+      <br />
+      <td>
+        <button type="submit">Cancel Order</button>
+        <button type="submit">Place Order</button>
+			</td>
+    </form>
+  </div>
+  
+</body>
+</html>
